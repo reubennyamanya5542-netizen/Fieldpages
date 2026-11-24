@@ -4,10 +4,12 @@ A responsive, pre-rendered editorial site for five evergreen content lanes: AI a
 
 ## Publish with GitHub Pages
 
-1. Create a GitHub repository and add the project files to its `main` branch.
+1. Create the `Fieldpages` GitHub repository under `reubennyamanya5542-netizen` and add the project files to its `main` branch.
 2. In the repository, open **Settings → Pages** and choose **GitHub Actions** as the build and deployment source.
 3. The included workflow at `.github/workflows/pages.yml` builds the site and deploys `dist/` on every push to `main`. The first run can also be started from **Actions → Publish Fieldnotes to GitHub Pages → Run workflow**.
-4. After the first deployment, copy the public site root from the Pages deployment details. In **Settings → Secrets and variables → Actions → Variables**, add a repository variable named `SITE_URL` containing that exact HTTPS root (for example, `https://OWNER.github.io/REPOSITORY` for a project site, or your custom-domain root). Run the workflow again. This adds accurate canonical URLs, Open Graph URLs, a sitemap, and the sitemap reference in `robots.txt`; those absolute addresses are intentionally omitted until the real public origin is known.
+4. The workflow is preconfigured for `https://reubennyamanya5542-netizen.github.io/Fieldpages`. It uses this origin to create canonical URLs, Open Graph URLs, a sitemap, and the sitemap reference in `robots.txt`. You do not need to add a `SITE_URL` repository variable unless you later switch to a custom domain.
+
+The public URL is `https://reubennyamanya5542-netizen.github.io/Fieldpages/`. A push to the GitHub repository's `main` branch starts the deployment workflow; the first deployment can also be started from **Actions → Publish Fieldnotes to GitHub Pages → Run workflow**.
 
 GitHub Pages serves the generated files from `dist/`. The included `.nojekyll` file avoids Jekyll processing. Internal links are relative so the same output works both at a repository subpath and at a custom domain.
 
@@ -20,13 +22,13 @@ node scripts/build.mjs
 python3 -m http.server 8000 --directory dist
 ```
 
-Open `http://localhost:8000`. Set `SITE_URL` only when you know the actual public root, for example:
+Open `http://localhost:8000`. The GitHub Actions workflow supplies the configured public URL. To override it for a custom domain, set `SITE_URL`, for example:
 
 ```sh
-SITE_URL="https://OWNER.github.io/REPOSITORY" node scripts/build.mjs
+SITE_URL="https://your-custom-domain.example" node scripts/build.mjs
 ```
 
-The build generates the homepage, five topic hubs, ten guide pages, a real `404.html`, the route manifest, `robots.txt`, and (when `SITE_URL` is configured) `sitemap.xml`.
+The build generates the homepage, five topic hubs, ten guide pages, a real `404.html`, the route manifest, and `robots.txt`; when a public origin is configured it also generates `sitemap.xml`.
 
 ## Editorial and monetization setup
 
